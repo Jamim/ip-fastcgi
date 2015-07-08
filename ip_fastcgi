@@ -1,0 +1,17 @@
+#!/sbin/runscript
+
+pidfile="/run/ip-fastcgi.pid"
+user=${user:-nginx}
+group=${group:-nginx}
+
+start() {
+	ebegin "Starting ip_fastcgi"
+	start-stop-daemon -u ${user}:${group} -mp ${pidfile} -Sbx /usr/local/sbin/ip-fastcgi
+	eend
+}
+
+stop() {
+	ebegin "Stopping ip_fastsgi"
+	start-stop-daemon -Kp ${pidfile}
+	eend
+}
